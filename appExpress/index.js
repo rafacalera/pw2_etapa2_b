@@ -5,28 +5,26 @@ const path = require('path')
 
 const basePath = path.join(__dirname, 'templates') // abre o diretório templates
 
-var checkAuth = function (req, res, next){ // cria o middleware
-    req.authStatus = true
-    if (req.authStatus) {
-        console.log('Está logado pode continuar')
-        next()
-    }
-    else{
-        console.log('Não está logado! Travado no sistema.')
-    }
-}
-
-app.use(checkAuth) // puxa o middleware
+app.use(
+    express.urlencoded({
+        extended: true,
+    }),
+)
+app.use(express.json())
 
 app.get('/', (req, res) => { 
     res.sendFile(`${basePath}/index.html`)
 })
 
-app.get('/user/:id', (req, res) => {
-    var usuario = req.params.id + "gmail.com"
+app.get('/user/add', (req, res) => { 
+    res.sendFile(`${basePath}/userForm.html`)
+})
 
-    console.log(`O Navegador mandou: ${usuario} como usuário`)
-    res.sendFile(`${basePath}/user.html`)
+app.post('/users/save', (req, res) => {
+    let name = req.body.name
+    let age = req.body.age
+    console.log(`nome: ${name}, idade: ${age}.`)
+
 })
 
 app.listen(port, () => {
