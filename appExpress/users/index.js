@@ -1,4 +1,5 @@
 var express = require('express')
+const { userInfo } = require('os')
 var router = express.Router()
 const path = require('path')
 const basePath = path.join(__dirname, '../templates')
@@ -14,6 +15,7 @@ router.post('/save', (req, res) => { //post para fazer o envio para o Backend
 
     console.info(name)
     console.info(age)
+    res.status(200).sendFile(`${basePath}/userForm.html`)
 })
 
 router.get('/:id', (req, res) => { 
